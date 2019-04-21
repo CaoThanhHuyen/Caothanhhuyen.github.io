@@ -1,16 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<script type='text/javascript'>
+var Workspace;
+(function (Workspace) {
+    var SVGWorkspace = (function () {
+        function SVGWorkspace(parent, minX, minY, width, height) {
+            if (minX === void 0) { minX = -500; }
+            if (minY === void 0) { minY = -500; }
+            if (width === void 0) { width = 1000; }
+            if (height === void 0) { height = 1000; }
+            this.minX = minX;
+            this.minY = minY;
+            this.width = width;
+            this.height = height;
+            this.SVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            this.SVG.setAttribute("touch-action", "none");
+            this.SVG.setAttribute("viewBox", "minX minY width height"
+                .replace("minX", this.minX.toString())
+                .replace("minY", this.minY.toString())
+                .replace("width", this.width.toString())
+                .replace("height", this.height.toString()));
+            this.Base = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            this.Base.setAttribute("id", "base");
+            // this.Base.setAttribute("filter", "url(#blur)");
+            this.SVG.appendChild(this.Base);
+            this.SVG.addEventListener("pointermove", this);
+            this.SVG.addEventListener("pointerdown", this);
+            parent.appendChild(this.SVG);
+            this.pointer = this.SVG.createSVGPoint();
+            this.pointer.x = 0;
+            this.pointer.y = 0;
+        }
+        SVGWorkspace.prototype.handleEvent = function (e) {
+            switch (e.type) {
+                case "pointermove":
+                    this.pointer.x = e.clientX;
+                    this.pointer.y = e.clientY;
+                    var CTM = this.Base.getScreenCTM();
+                    this.pointer = this.pointer.matrixTransform(CTM.inverse());
+                    break;
+                case "pointerdown":
+                    this.pointer.x = e.clientX;
+                    this.pointer.y = e.clientY;
+                    var CTM = this.Base.getScreenCTM();
+                    this.pointer = this.pointer.matrixTransform(CTM.inverse());
+                    break;
+            }
+        };
+        SVGWorkspace.prototype.addToDefs = function (defElement) {
+            var defsElement = this.SVG.querySelector("defs");
+            if (!defsElement) {
+                defsElement = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+                this.SVG.insertBefore(defsElement, this.SVG.firstElementChild);
+            }
+            defsElement.appendChild(defElement);
+        };
+        SVGWorkspace.prototype.clear = function () {
+            while (this.Base.firstChild) {
+                this.Base.removeChild(this.Base.firstChild);
+            }
+        };
+        return SVGWorkspace;
+    })();
+    Workspace.SVGWorkspace = SVGWorkspace;
+})(Workspace || (Workspace = {}));
+var Main = (function () {
+    var wsParent = document.querySelector(".workspace");
+    var ws = new Workspace.SVGWorkspace(wsParent, -500, -500, 1000, 1000);
+    var NS = "http://www.w3.org/2000/svg";
+    var XNS = "http://www.w3.org/1999/xlink";
+    var hex = document.createElementNS(NS, "polygon");
+    hex.setAttribute("id", "hexagon");
+    hex.setAttribute("points", "-25,43.3 -50,0 -25,-43.3 25,-43.3 50,0 25,43.3");
+    ws.addToDefs(hex);
+    var filter = document.createElementNS(NS, "filter");
+    filter.setAttribute("id", "blur");
+    var gauss = document.createElementNS(NS, "feGaussianBlur");
+    gauss.setAttribute("in", "SourceGraphic");
+    gauss.setAttribute("stdDeviation", "2");
+    filter.appendChild(gauss);
+    ws.addToDefs(filter);
+    function random(min, max, integer) {
+        var r = Math.random() * (max - min) + min;
+        return integer ? r | 0 : r;
+    }
+    function useHexagon(x, y, hue) {
+        var useHex = document.createElementNS(NS, "use");
+        useHex.setAttributeNS(XNS, "href", "#hexagon");
+        useHex.setAttribute("x", x.toFixed(2));
+        useHex.setAttribute("y", y.toFixed(2));
+        useHex.setAttribute("fill", "none");
+        useHex.setAttribute("stroke", "hsl(hue, 100%, 35%)".replace("hue", hue.toString()));
+        return useHex;
+    }
+    ws.SVG.addEventListener("pointerdown", function (ev) {
+        ws.Base.appendChild(useHexagon(ws.pointer.x, ws.pointer.y, random(180, 359, true)));
+    });
+})();
+</script>  
 <script type='text/javascript'>
 //<![CDATA[
 var snowmax=150;//So luong tuyet roi
 var snowcolor=new Array("#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"); //Mau sac cac hat tuyet roi
-
 var snowtype=new Array("Times","Arial","Times","Verdana");var snowletter="*";var sinkspeed=0.6;var snowmaxsize=50;var snowminsize=8;var snowingzone=1;var snow=new Array();var marginbottom;var marginright;var timer;var i_snow=0;var x_mv=new Array();var crds=new Array();var lftrght=new Array();var browserinfos=navigator.userAgent;var ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/);var ns6=document.getElementById&&!document.all;var opera=browserinfos.match(/Opera/);var browserok=ie5||ns6||opera;function randommaker(range){rand=Math.floor(range*Math.random());return rand}function initsnow(){if(ie5||opera){marginbottom=document.body.scrollHeight;marginright=document.body.clientWidth-15}else if(ns6){marginbottom=document.body.scrollHeight;marginright=window.innerWidth-15}var snowsizerange=snowmaxsize-snowminsize;for(i=0;i<=snowmax;i++){crds[i]=0;lftrght[i]=Math.random()*15;x_mv[i]=0.03+Math.random()/10;snow[i]=document.getElementById("s"+i);snow[i].style.fontFamily=snowtype[randommaker(snowtype.length)];snow[i].size=randommaker(snowsizerange)+snowminsize;snow[i].style.fontSize=snow[i].size+'px';snow[i].style.color=snowcolor[randommaker(snowcolor.length)];snow[i].style.zIndex=1000;snow[i].sink=sinkspeed*snow[i].size/5;if(snowingzone==1){snow[i].posx=randommaker(marginright-snow[i].size)}if(snowingzone==2){snow[i].posx=randommaker(marginright/2-snow[i].size)}if(snowingzone==3){snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}if(snowingzone==4){snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size);snow[i].style.left=snow[i].posx+'px';snow[i].style.top=snow[i].posy+'px'}movesnow()}function movesnow(){for(i=0;i<=snowmax;i++){crds[i]+=x_mv[i];snow[i].posy+=snow[i].sink;snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i])+'px';snow[i].style.top=snow[i].posy+'px';if(snow[i].posy>=marginbottom-2*snow[i].size||parseInt(snow[i].style.left)>(marginright-3*lftrght[i])){if(snowingzone==1){snow[i].posx=randommaker(marginright-snow[i].size)}if(snowingzone==2){snow[i].posx=randommaker(marginright/2-snow[i].size)}if(snowingzone==3){snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}if(snowingzone==4){snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}snow[i].posy=0}}var timer=setTimeout("movesnow()",30)}for(i=0;i<=snowmax;i++){document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")}if(browserok){window.onload=initsnow}
-
-
 window.setInterval('flakeFall();',100);
 //]]>
 </script>  
+
 <head>
 	<meta charset="UTF-8">
 	<title>Cao Thanh Huyền</title>
@@ -20,9 +117,16 @@ window.setInterval('flakeFall();',100);
 	<link rel="stylesheet" href="sheet/mine.css">
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,700" rel="stylesheet">
 	<script src="javascript/myscript.js"></script>
+	<link rel='stylesheet' href='https://cdn.rawgit.com/daneden/animate.css/v3.1.0/animate.min.css'>
+<script src='https://cdn.rawgit.com/matthieua/WOW/1.0.1/dist/wow.min.js'></script>
+<script>
+new WOW().init();
+</script>
 </head>
 
 <body>
+<section class="workspace"></section>
+<div align="center" style="z-index:9;visibility:visible;"><a href="http://www.totallyfreecursors.com/" target="_blank" class="tfc"><img src="http://downloads.totallyfreecursors.com/public/CursorsLogo88-31.gif" border="0" width="88" height="31" alt="Free Mickey Mouse Cursors at www.totallyfreecursors.com" /></a></div><style>HTML,BODY{cursor: url("http://downloads.totallyfreecursors.com/cursor_files/mickey_mouse.ani"), url("http://downloads.totallyfreecursors.com/thumbnails/mickey_mouse.gif"), auto;}</style>
 	<div class="menu">
 		<div class="container">
 			<div class="row">
@@ -41,7 +145,7 @@ window.setInterval('flakeFall();',100);
 				<div class="py-3 px-2 px-lg-4 py-lg-5">
 
 					<div class="row">
-						<div class="avatarBox col-12 col-lg-5">
+						<div class="avatarBox col-12 col-lg-5 wow bounceInDown center" data-wow-delay="2s">
 							<img src="img/3.jpg" class="img-fluid">
 						</div>
 
@@ -105,171 +209,118 @@ window.setInterval('flakeFall();',100);
 			</div>
 		</div>
 	</div>
-	<br>
-	<hr>
-	<span class="text-center">Ảnh</span>
+	<button type="button" class="btn btn-outline-danger btn-lg btn-block">Ảnh Của Huyền</button>	
 	<div class="container">
 				<div class="card-group">
-			<div class="card">
+			<div class="card wow rollIn" data-wow-delay="0.5s">
 				<img src="img/1.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow bounceInDown center" data-wow-delay="1s">
 				<img src="img/9.jpg" class="card-img-top img-fluid" alt="..." >
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
 			
 			
 		</div>
 		<div class="card-group">
-			<div class="card">
+			<div class="card   wow rollIn" data-wow-delay="1s">
 				<img src="img/4.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow bounceInDown center" data-wow-delay="1.5s">
 				<img src="img/8.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow bounceInRight" data-wow-delay="2s">
 				<img src="img/2.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
 			
 		</div>
 		<div class="card-group">
-			<div class="card">
+			<div class="card wow rollIn" data-wow-delay="1s">
 				<img src="img/20 (1).jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow bounceInDown center" data-wow-delay="2s">
 				<img src="img/21.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow bounceInRight" data-wow-delay="2.5s">
 				<img src="img/22.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
 			
 		</div>
 		<div class="card-group">
-			<div class="card">
+			<div class="card wow rollIn" data-wow-delay="1.5s">
 				<img src="img/10.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow bounceInRight" data-wow-delay="1.5s">
 				<img src="img/7.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
 		</div>
 		<div class="card-group">
 			
 			
-			<div class="card">
+			<div class="card wow bounceInDown center" data-wow-delay="1s">
 				<img src="img/16.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow wow rollIn" data-wow-delay="1.5s">
 				<img src="img/17.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
 		</div>
 		<div class="card-group">
 			
 			
-			<div class="card">
+			<div class="card wow rollIn" data-wow-delay="1s">
 				<img src="img/11.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow bounceInRight" data-wow-delay="1.5s">
 				<img src="img/12.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
 		</div>
 		<div class="card-group">
 			
 			
-			<div class="card">
+			<div class="card wow rollIn" data-wow-delay="1s">
 				<img src="img/13.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
-			<div class="card">
+			<div class="card wow bounceInRight" data-wow-delay="1.5s">
 				<img src="img/14.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
 		</div>
 		<div class="card-group">
 			
 			
-			<div class="card">
+			<div class="card wow bounceInDown center" data-wow-delay="1s">
 				<img src="img/19.jpg" class="card-img-top" alt="...">
 				<div class="card-body">
-					<h5 class="card-title"></h5>
-					<p class="card-text"></p>
-					<p class="card-text"><small class="text-muted"></small></p>
 				</div>
 			</div>
 			
