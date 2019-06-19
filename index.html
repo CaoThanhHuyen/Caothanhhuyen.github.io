@@ -1,344 +1,171 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<script type='text/javascript'>
-var Workspace;
-(function (Workspace) {
-    var SVGWorkspace = (function () {
-        function SVGWorkspace(parent, minX, minY, width, height) {
-            if (minX === void 0) { minX = -500; }
-            if (minY === void 0) { minY = -500; }
-            if (width === void 0) { width = 1000; }
-            if (height === void 0) { height = 1000; }
-            this.minX = minX;
-            this.minY = minY;
-            this.width = width;
-            this.height = height;
-            this.SVG = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            this.SVG.setAttribute("touch-action", "none");
-            this.SVG.setAttribute("viewBox", "minX minY width height"
-                .replace("minX", this.minX.toString())
-                .replace("minY", this.minY.toString())
-                .replace("width", this.width.toString())
-                .replace("height", this.height.toString()));
-            this.Base = document.createElementNS("http://www.w3.org/2000/svg", "g");
-            this.Base.setAttribute("id", "base");
-            // this.Base.setAttribute("filter", "url(#blur)");
-            this.SVG.appendChild(this.Base);
-            this.SVG.addEventListener("pointermove", this);
-            this.SVG.addEventListener("pointerdown", this);
-            parent.appendChild(this.SVG);
-            this.pointer = this.SVG.createSVGPoint();
-            this.pointer.x = 0;
-            this.pointer.y = 0;
-        }
-        SVGWorkspace.prototype.handleEvent = function (e) {
-            switch (e.type) {
-                case "pointermove":
-                    this.pointer.x = e.clientX;
-                    this.pointer.y = e.clientY;
-                    var CTM = this.Base.getScreenCTM();
-                    this.pointer = this.pointer.matrixTransform(CTM.inverse());
-                    break;
-                case "pointerdown":
-                    this.pointer.x = e.clientX;
-                    this.pointer.y = e.clientY;
-                    var CTM = this.Base.getScreenCTM();
-                    this.pointer = this.pointer.matrixTransform(CTM.inverse());
-                    break;
-            }
-        };
-        SVGWorkspace.prototype.addToDefs = function (defElement) {
-            var defsElement = this.SVG.querySelector("defs");
-            if (!defsElement) {
-                defsElement = document.createElementNS("http://www.w3.org/2000/svg", "defs");
-                this.SVG.insertBefore(defsElement, this.SVG.firstElementChild);
-            }
-            defsElement.appendChild(defElement);
-        };
-        SVGWorkspace.prototype.clear = function () {
-            while (this.Base.firstChild) {
-                this.Base.removeChild(this.Base.firstChild);
-            }
-        };
-        return SVGWorkspace;
-    })();
-    Workspace.SVGWorkspace = SVGWorkspace;
-})(Workspace || (Workspace = {}));
-var Main = (function () {
-    var wsParent = document.querySelector(".workspace");
-    var ws = new Workspace.SVGWorkspace(wsParent, -500, -500, 1000, 1000);
-    var NS = "http://www.w3.org/2000/svg";
-    var XNS = "http://www.w3.org/1999/xlink";
-    var hex = document.createElementNS(NS, "polygon");
-    hex.setAttribute("id", "hexagon");
-    hex.setAttribute("points", "-25,43.3 -50,0 -25,-43.3 25,-43.3 50,0 25,43.3");
-    ws.addToDefs(hex);
-    var filter = document.createElementNS(NS, "filter");
-    filter.setAttribute("id", "blur");
-    var gauss = document.createElementNS(NS, "feGaussianBlur");
-    gauss.setAttribute("in", "SourceGraphic");
-    gauss.setAttribute("stdDeviation", "2");
-    filter.appendChild(gauss);
-    ws.addToDefs(filter);
-    function random(min, max, integer) {
-        var r = Math.random() * (max - min) + min;
-        return integer ? r | 0 : r;
-    }
-    function useHexagon(x, y, hue) {
-        var useHex = document.createElementNS(NS, "use");
-        useHex.setAttributeNS(XNS, "href", "#hexagon");
-        useHex.setAttribute("x", x.toFixed(2));
-        useHex.setAttribute("y", y.toFixed(2));
-        useHex.setAttribute("fill", "none");
-        useHex.setAttribute("stroke", "hsl(hue, 100%, 35%)".replace("hue", hue.toString()));
-        return useHex;
-    }
-    ws.SVG.addEventListener("pointerdown", function (ev) {
-        ws.Base.appendChild(useHexagon(ws.pointer.x, ws.pointer.y, random(180, 359, true)));
-    });
-})();
-</script>  
-<script type='text/javascript'>
-//<![CDATA[
-var snowmax=150;//So luong tuyet roi
-var snowcolor=new Array("#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"); //Mau sac cac hat tuyet roi
-var snowtype=new Array("Times","Arial","Times","Verdana");var snowletter="*";var sinkspeed=0.6;var snowmaxsize=50;var snowminsize=8;var snowingzone=1;var snow=new Array();var marginbottom;var marginright;var timer;var i_snow=0;var x_mv=new Array();var crds=new Array();var lftrght=new Array();var browserinfos=navigator.userAgent;var ie5=document.all&&document.getElementById&&!browserinfos.match(/Opera/);var ns6=document.getElementById&&!document.all;var opera=browserinfos.match(/Opera/);var browserok=ie5||ns6||opera;function randommaker(range){rand=Math.floor(range*Math.random());return rand}function initsnow(){if(ie5||opera){marginbottom=document.body.scrollHeight;marginright=document.body.clientWidth-15}else if(ns6){marginbottom=document.body.scrollHeight;marginright=window.innerWidth-15}var snowsizerange=snowmaxsize-snowminsize;for(i=0;i<=snowmax;i++){crds[i]=0;lftrght[i]=Math.random()*15;x_mv[i]=0.03+Math.random()/10;snow[i]=document.getElementById("s"+i);snow[i].style.fontFamily=snowtype[randommaker(snowtype.length)];snow[i].size=randommaker(snowsizerange)+snowminsize;snow[i].style.fontSize=snow[i].size+'px';snow[i].style.color=snowcolor[randommaker(snowcolor.length)];snow[i].style.zIndex=1000;snow[i].sink=sinkspeed*snow[i].size/5;if(snowingzone==1){snow[i].posx=randommaker(marginright-snow[i].size)}if(snowingzone==2){snow[i].posx=randommaker(marginright/2-snow[i].size)}if(snowingzone==3){snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}if(snowingzone==4){snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}snow[i].posy=randommaker(2*marginbottom-marginbottom-2*snow[i].size);snow[i].style.left=snow[i].posx+'px';snow[i].style.top=snow[i].posy+'px'}movesnow()}function movesnow(){for(i=0;i<=snowmax;i++){crds[i]+=x_mv[i];snow[i].posy+=snow[i].sink;snow[i].style.left=snow[i].posx+lftrght[i]*Math.sin(crds[i])+'px';snow[i].style.top=snow[i].posy+'px';if(snow[i].posy>=marginbottom-2*snow[i].size||parseInt(snow[i].style.left)>(marginright-3*lftrght[i])){if(snowingzone==1){snow[i].posx=randommaker(marginright-snow[i].size)}if(snowingzone==2){snow[i].posx=randommaker(marginright/2-snow[i].size)}if(snowingzone==3){snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/4}if(snowingzone==4){snow[i].posx=randommaker(marginright/2-snow[i].size)+marginright/2}snow[i].posy=0}}var timer=setTimeout("movesnow()",30)}for(i=0;i<=snowmax;i++){document.write("<span id='s"+i+"' style='position:absolute;top:-"+snowmaxsize+"'>"+snowletter+"</span>")}if(browserok){window.onload=initsnow}
-window.setInterval('flakeFall();',100);
-//]]>
-</script>  
-
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="UTF-8">
-	<title>Cao Thanh Huyền</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" href="sheet/bootstrap.css">
-	<link rel="stylesheet" href="sheet/ionicons.min.css">
-	<link rel="stylesheet" href="sheet/mine.css">
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,700" rel="stylesheet">
-	<script src="javascript/myscript.js"></script>
-	<link rel='stylesheet' href='https://cdn.rawgit.com/daneden/animate.css/v3.1.0/animate.min.css'>
-<script src='https://cdn.rawgit.com/matthieua/WOW/1.0.1/dist/wow.min.js'></script>
-<script>
-new WOW().init();
-</script>
+<!--
+
+   __ __  //|          __     ____  ______      _   __  _  __
+  / //_/ |/||  ___    / /    /  _/ /_  __/     | | / / / |/ /
+ / ,<   / -_) / _ \  / _ \  _/ /    / /   _    | |/ / /    / 
+/_/|_|  \__/ /_//_/ /_//_/ /___/   /_/   (_)   |___/ /_/|_/  
+                                                             
+Trang tổng hợp, chia sẻ code hay
+url: http://kênhit.vn (Tên miền có dấu Tiếng Việt)
+-->
+    <meta http-equiv="Page-Enter" content="progid:DXImageTransform.Microsoft.Fade(duration=1)">
+    <meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=1)">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset = UTF-8" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="Stylesheet" href="style.css" type="text/css" />
+    <title>Cao Thanh Huyền</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="counterup.js"></script>
+    <script type="text/javascript" src="timroi.js"></script>
+    <script language="javascript">
+
+        title_tmp1 = document.title
+
+        if (title_tmp1.indexOf(">>") != -1) {
+
+            title_tmp2 = title_tmp1.split(">>");
+
+            title_last = "*~*" + title_tmp2[1];
+
+            title_last = title_last + "*~*" + title_tmp2[2];
+
+        } else {
+
+
+
+            if (title_tmp1.indexOf("*~*") != -1) {
+
+                title_tmp2 = title_tmp1.split("*~*");
+
+                title_last = "*~*" + title_tmp2[1];
+
+                if (title_last == "*~*") { title_last = "*~*" };
+
+                if (title_last == "*~*") { title_last = "*~*" };
+
+            }
+
+            else { title_last = " Gửi cho Hoàng hậu xưn gái... " }
+
+        }
+
+        title_new = "" + title_last + ""
+
+        step = 0
+
+        function flash_title() {
+
+            step++
+
+            if (step == 8) { step = 1 }
+
+            if (step == 1) { document.title = '[~~~~*' + title_new + '*~~~~]' }
+
+            if (step == 2) { document.title = '[~~~*~' + title_new + '-*~~~]' }
+
+            if (step == 3) { document.title = '[~~*~~' + title_new + '~~*~~]' }
+
+            if (step == 4) { document.title = '[~*~~~' + title_new + '~~~*~]' }
+
+            if (step == 5) { document.title = '[~~*~~' + title_new + '~~*~~]' }
+
+            if (step == 6) { document.title = '[~~~*~' + title_new + '~*~~~]' }
+
+            if (step == 7) { document.title = '[~~~~*' + title_new + '*~~~~]' }
+
+            setTimeout("flash_title()", 180);
+
+        }
+
+        flash_title();
+
+        function scrollToBottom(elm_id) {
+            var elm = document.getElementById(elm_id);
+            try {
+                elm.scrollTop = elm.scrollHeight;
+            }
+            catch (e) {
+                var f = document.createElement("input");
+                if (f.setAttribute) f.setAttribute("type", "text")
+                if (elm.appendChild) elm.appendChild(f);
+                f.style.width = "0px";
+                f.style.height = "0px";
+                if (f.focus) f.focus();
+                if (elm.removeChild) elm.removeChild(f);
+            }
+        }
+
+    </script>
+    
 </head>
+<body onload="javascript:teclear();">
+    <div id="TextCounter">
+        <strong>Hiệp sĩ</strong>
+        <img src="heartr.png" />
+        <strong>Hoàng Hậu xưn gái</strong> <span id="counter">
+            <script type="text/javascript">
+                // January: tháng 1
+                // February: tháng 2
+                // March: tháng 3
+                // April: tháng 4
+                // May: tháng 5
+                // June: tháng 6
+                // July: tháng 7
+                // August: tháng 8
+                // September: tháng 9
+                // October: tháng 10
+                // November: tháng 11
+                // December: tháng 12
+                new CountUp('June 20 2019 4:39:00', 'counter', "...  ");
+            </script>
+        </span>
+    </div>
+    <div id="BgContent">
+        <div id="copyright">
+            From: Hiệp sĩ
+        </div>
+        <div id="TextContent">
+        </div>
+        <div id="MusicPlayer">
+            <iframe src="https://www.nhaccuatui.com/mh/background/BTfiALRUxtkC" width="1" height="1" frameborder="0" allowfullscreen allow="autoplay"></iframe><br />
+        </div>
+    </div>
+    <div id="canvas">
+    </div>
+    <script type="text/javascript" src="protoclass.js"></script>
+    <script type="text/javascript" src="box2d.js"></script>
+    <script type="text/javascript" src="Main.js"></script>
+    <script language="javascript" type="text/javascript">
+        mensaje =
+'<font size="6" face="Courier New" color="red">Những dòng tâm sự....<br></font>' + ' <br>' +
 
-<body>
-<section class="workspace"></section>
-<div align="center" style="z-index:9;visibility:visible;"><a href="http://www.totallyfreecursors.com/" target="_blank" class="tfc"><img src="http://downloads.totallyfreecursors.com/public/CursorsLogo88-31.gif" border="0" width="88" height="31" alt="Free Mickey Mouse Cursors at www.totallyfreecursors.com" /></a></div><style>HTML,BODY{cursor: url("http://downloads.totallyfreecursors.com/cursor_files/mickey_mouse.ani"), url("http://downloads.totallyfreecursors.com/thumbnails/mickey_mouse.gif"), auto;}</style>
-	<div class="menu">
-		<div class="container">
-			<div class="row">
-				<div class="col-12 text-center">
-					<h3 class="py-3">About <span>Me</span></h3>
-				</div>
-			</div>
-		</div>
-	</div>
-	
+'<font color="#fff" size="4">Những lúc rảnh rỗi, Anh thường giành thời gian để vào trang cá nhân của Em..chỉ là muôn biết những ngày trôi qua Em như thế nào, A chỉ có thể im lặng và quan sát Em thôi!! </font><br>' +'<br>    ' +
 
-		
-	<div class="container" style="margin-top: 116px;">
-		<div class="row">
-			<div class="col-11 mx-auto profile">
-				<div class="py-3 px-2 px-lg-4 py-lg-5">
+'<font size="4" color="#fff">Và cũng nhiều khi Anh đăng tus chỉ muốn thấy được Em like hay cmt, khi không thấy điều đó, Anh buồn lắm... </font><br>' +
 
-					<div class="row">
-						<div class="avatarBox col-12 col-lg-5 wow bounceInDown center" data-wow-delay="2s">
-							<img src="img/3.jpg" class="img-fluid">
-						</div>
+'<br>    ' +
 
-						<div class="infoBox col-12 col-lg-6 mt-2 mt-lg-0">
-							<p class="sayHi">Hello</p>
-							
-							<div class="name">
-								<p style="color: #f88498"><span style="color: black">I'm</span> Cao Thanh Huyền</p>
-								<p class="s">Alice
-									<span class="ion-ios-checkmark-outline"></span>
-								</p>
-								<p><span class="ion-android-globe" style="color: black"><b> Cháu cụ Cao Bá Quát</b></span></p>
-							</div>
-							<hr>
+'<font size="4" color="#fff">Chúng ta mới quen nhau mới 2 tháng thôi đấy 16-4-2019 ;)) mà a ngỡ như 2 năm vậy ?? Nhớ lần đầu tiên thấy Em, khi đó Anh thấy Em rất tuyệt, nhỏ nhắn xinh xắn, xong a chở em đi  xem phim "Nhà có khách", anh với em ngồi cười từ đầu đến cuối luôn, đến mấy đoạn kinh dị em cứ che mắt, còn a thì ngồi cười mà a vẫn k qên được,xemphim xong a với e còn đi ăn rồi còn gặp bạn em xong chụp lén bọn mình nữa chứ. Ngày đầu tiên gặp em mà a thấy k tồn tai khoảng cách của 2 người xa lạ...2 ngày sau bọn mình lại đi chơi tiếp, đi ăn chân gà với cút lộn ở trôi ý , hum ý a đi làm bên đông anh, chỉ mong nhà kia ăn cỗ xong để a còn về đón em đi chơi nữa, a đi về mà phóng nhanh lắm, nó giống như là xe cứu hỏa đi ngoài đường ý @@ hum ý em mời a , mà nhà này bán mắc quá e nhỉ, biết thế đi ăn chè ;)) à ăn chân gà xong mình đi ăn chè đấy, đình tân lập chỗ a ý, hum ý a giả vờ xem chỉ tay để được cầm tay em đấy em biết k, tha lỗi cho a nhé ;)) a cố tình đấy. hì hì . xong về em bảo a xem chỉ tay cho bao người nhưng người a muốn xem nhất chỉ là em thôi. Ngày 26 bọn mình lại đi chơi tiếp, hum ý sao lại đi chơi em còn nhớ k, a cũng k nhớ , à hum ý em xin đi làm về sớm, xong bị ai mượn xe nữa mãi e k được đi, a cũng chờ mòn mỏi cơ ;v, xong 9r vẫn đi, tính đi ăn chè mà cơn mưa nên chả ai mở quán chứ, xong định đưa em lên chỗ thượng cát mà đường văng nên e sợ đòi về ;v, lúc ý a kbiet nên đưa em đi đâu nhỉ, thì tự dưng đầu a nảy số đưa e ra chỗ cầu xong mua mấy gói bim bim ăn , 2 đứa ngồi vừa tâm hự vừa ăn mà k nhớ mua nước cho e, a vô tâm qá mà ;(, xong về a mới nghĩ ra là tại sao k mua kem cho e chứ , e thấy a stupid không @@ :̣̣((, đưa e về thì phải để e đi 1 đoạn mới về đến nhà vì sợ cô Dung bắt được, a cũng sợ hiiii... Ngày 28 chúng mình lại đi xem phim tiếp, Anvenger EndGame ý ;)) Lúc ra phim ý sốt vé nên tầm trưa a ra mua sớm may vẫn mua được 2 vé nhưng chỗ k đẹp lắm hicc, 5h trời còn đổ mưa nữa chứ a cứ sợ là sẽ k đi được ý mà ô trời đùa chúng ta khi 5r k mưa nữa ;)) ngồi xem a phải để ý xem chỗ nào e k hiểu còn giải thích nữa ;V, phía trên thì có ô trẻ đi xem phim , phim hay như vậy mà bố ngồi chơi liên quân, cáu thật e nhỉ, lúc ý a chỉ muốn cầm đthoai của hắn vứt đi thôi :V (a đùa đấy) ag  a còn gắp gấu cho em nữa, mà fail (buồn hiccc). Tháng 4 của bọn mình đấy mới gặp mà đi chơi tận 4 lần luôn <3. <br> Em có tag a vào tus có cái chong chóng, chắc em thích nên a lùng bằng được mà đen cái chả có hàng mới cáu chứ, ok đợi vậy, a lên khắp các page, web, bla bla nhiều lắm thì cũng có chỗ bán, a đi mua luôn cho em, mua đc rồi thì tối hôm sau thì có cái shop a đặt ship từ Sài Gòn ship vào cho a cơ, mà a bảo hủy đơn rồi nên k nhận hì hì. Ai bảo chốt đơn chả rõ ràng gì cơ. <br> Xong thì đến sinh nhật A, kbiet e có nhớ ngày k :(( Hum ý a với em đi ăn ở chỗ tân hội , a có mua cho em 1 con vịt gắn xe, 1 cái kẹp tóc hình trái tym, em đeo lên trông xinh lắm, a cười bởi vì a thây vui chứ k có ý gì đâu, hum ý a cũng mong có được 1 món quà gì đó từ em nữa cơ thì perfect. Nhưng thấy e vui là a cũng vui rồi ;)) Tháng 5 này bọn mình đi chơi có hum đấy thì phải, a có rủ e mà em toàn bận ;(( , Nhưng có một hôm 18h30 e bảo k đi được e cũng k nói lý do nhưng... a biết lý do đó là gì, thật sự hôm đó a rất là chán nản và thất vọng.... Tháng 6 thì em có rủ a đi xphim nhưng đó là món quà sinh nhật muộn, a rủ em đi chơi mấy lần em đều từ chối rồi e rủ a đi chơi làm a nghĩ rằng em chỉ đi với a để bù lại món quà sinh nhật em còn nợ, A nghĩ e sẽ tặng cái gì đó bằng hiện vật  ;(. ngày 16-6 thì a có đi phỏng vấn ở tòa nhà em đang học, a có nói em trước hum đó rồi, cũng có định pv xong rồi em học xong thì sẽ đi ăn hoặc đi đâu đó nhưng hum đó a k thấy một phản hồi nào từ em, e bảo e k để ý đthoai a nghĩ đó kphai lý do bởi vì a có nói em trước tối qua rồi, vậy mà e k để ý đthoai ;(( thực sự hum đó a có lên chỗ e nhưng kbiet vào ntn nên đành đi xuống, a ngồi ở highland coffee đợi ý, a đợi rất lâu, luôn hy vọng e sẽ nt or gọi cho a, a luôn tìm lý do là em đang học k để ý đthoai, a rất là buồn em có biết k....tính giận em lâu lâu ý, mà em nhắn vài tin thôi a lại thấy chả muốn giận em nữa, k hiểu sao ý ;((, thấy a stupid lần 2 k :|, Tháng này biết em sắp hết time xem netflix a lại đi hỏi mượn thẻ bọn n cho em, bọn n cứ sợ a lừa đảo k cho mượn ý, tao thèm vào nhá .hmm cuối cùng bằng biện pháp nghiệp vụ a cũng mượn cho e được 1 cái thẻ, hay k hehe, nhớ lần tính teamview cho em xem free mà fail( ôm mặt khóc ), nhưng a tìm cho e được cái iflix cũng có phụ đề cho em học tiếng anh hihha, e dùng hết hạn thẻ kia thì nhớ hủy đi k trừ tiền chúng n bắt tội a chết, còn cái iflix kia thì e hết tk thì lấy tk face or gmail lại được free 1 tháng, hoặc em gõ code free iflix lxong nhập vào là được 3 tháng đấy,   a k biết tại sao tháng 5 và tháng 6 em đều từ chối đi chơi với a nhưng giờ a nghĩ là a đã có câu trả lời, Em không biết đâu, a muốn dẫn e đi nhiều nơi lắm, a muốn đưa em đi quanh cầu Nhật Tân, lên cầu chương dương, đi chụp ảnh, ngắm Hoàng Hôn ở Hồ Tây,muốn dạy e bơi , à cả đi phượt nữa, cũng muốn dẫn e đi xem a đá bóng 1 lần, nhưng chắc sẽ khó có thể thực hiện được nữa rồi, hôm nay e nay e lại hỏi tình cảm của a, a cũng muốn nói với em luôn tình cảm của a nhưng mà rất không may là bị em từ chối, lsuc đó a rất bối rối, a kbiet nên nói lên tcam của mình với em ntn nữa...Thực ra a có ý định là chủ nhật này sẽ rủ em đi chơi và cũng sẽ tỏ tình em luôn vì a muốn nói 3 từ Anh Yêu Em trước mặt em, em có từ chối a cũng nhẹ lòng... giờ thì  chả biết còn cơ hội k nữa, a đúng là kém cỏi em nhỉ, nói lên tình cảm của mình cũng khó để rồi người ta đi mất thì chả biest nói với ai @@  2 tháng những gì về em a đều lưu lại hết, vé xphim a vẫn giữ nhé ^^, hum nào  đi chơi với e a  chụp ảnh làm thành 1 album đấy, em còn bảo hum nào đi chơi cũng bảo a tặng 1 cái kẹo mút chứ, e còn giữ k nhớ đừng ăn đấy ^^  nhưng A vẫn thiếu 1 bức ảnh của chúng mình chụp với nhau... A còn định đưa em nuôi chuột nữa mà mãi n k đẻ hóa ra nó bị béo bụng em ạ ;(( lừa đảo thế kbiet ;V, Còn gì nữa k nhỉ ? À 2 tháng em biết bọn mình nhắn bao nhiêu tin k?? 11569 tin nhắn đấy, nhiều k, a với em nhiều chuyện phết hiii... A có đưa em 2 cây vạn niên thanh với hồng môn em nhớ chăm sóc kỹ 2 cây ý nhé, cây hồng môn e cho phơi nắng ngày 1,2 lần với tưới đều 2 ngày 1 lần cho nó nhé. Còn gì nữa k nhỉ À còn trang web a viết cho e, A thay thành trang này nhé coi như nhật ký của 2 chúng mình, em biết a là người thích lưu giữ kỷ niệm mà. Từ khi tiếp xúc với Em, Anh cảm thấy được Anh thích Em, và hằng ngày thứ tình cảm đó tăng dần lên, nhiều khi tưởng chừng không chịu nổi nữa, chỉ muốn nói hết với Em.</font><br>' +
 
-							<div class="detailInfo">
-								<div class="row my-2">
-									<div class="col-lg-4 col-12 boldd">Tên</div>
-									<div class="col-lg-8 col-12 b">Cao Thanh Huyền</div>
-								</div>
-								<div class="row my-2">
-									<div class="col-lg-4 col-12 boldd">Ngày Sinh</div>
-									<div class="col-lg-8 col-12 b">26-10-1999 (Thiên yết)</div>
-								</div>
-								<div class="row my-2">
-									<div class="col-lg-4 col-12 boldd">Trường</div>
-									<div class="col-lg-8 col-12 b">Học viện hành chính</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-4 col-12 boldd">Tuổi</div>
-									<div class="col-lg-8 col-12 b">19 Years Old</div>
-								</div>
-								<div class="row">
-									<div class="col-lg-4 col-12 boldd">Sở thích</div>
-									<div class="col-lg-8 col-12 b">Tôi thích học tiếng anh và nghe nhạc <p style="color: red">Billie Eilish</p></div>
-								</div>
-								<br>
-								<p style="text-align: center;">^^ Tôi là cung <b style="color: #f88498">Bọ Cạp</b></p>
-								<hr>
-								<div class="row">
-									<div class="col-lg-12 col-12 boldd"><p style="color: red">Someone told me that I'm only good at being bad =))</p></div>
-								</div>
-							</div>
-						</div>
-					</div>
+'  <font size="4" color="#fff"> Anh luôn đứng nhìn Em từ phía sau..hãy mạnh dạn bước đi Em nhé. Nếu sau này bên cạnh Em, sánh bước cùng Em ko phải là Anh..thì Anh vẫn luôn là người đi phía sau Em, dõi theo Em...và luôn cầu nguyện cho Em.! Hy vọng sẽ có 1 thiên thần nào đó thay Anh yêu Em nhiều như Anh yêu Em...! </font>' +
+'                    <br>' +
 
-				</div>
-			</div>
-			<div class="col-11 mx-auto bg-danger contact text-center">
-				<div class="social col-12">
-					<!-- Facebook -->
-					<a href="https://www.facebook.com/your.huyenthanhcao" target="_blank">
-						<span class="ion-social-facebook mr-4 mr-lg-5"></span>
-					</a>
-					<a href="https://www.instagram.com/cthhuyen/?fbclid=IwAR2WDfTTxu6a5WKwghJj1hKZQ_QQTktYm6vsmHDBPgHr7uNgpV5NMkfPn9A" target="_blank"><span class="ion-social-instagram-outline mr-4 mr-lg-5 ml-lg-3"></span></a>
-					<span class="ion-social-whatsapp-outline mr-4 mr-lg-5 ml-lg-3"></span>
-					<span class="ion-social-skype-outline mr-4 mr-lg-5 ml-lg-3"></span>
-					<span class="ion-social-twitter-outline mr-4 mr-lg-5 ml-lg-3"></span>
-					<span class="ion-social-linkedin-outline ml-lg-3"></span>
-				</div>
-			</div>
-		</div>
-	</div>
-	<button type="button" class="btn btn-outline-danger btn-lg btn-block">Ảnh Của Huyền</button>	
-	<div class="container">
-				<div class="card-group">
-			<div class="card wow rollIn" data-wow-delay="0.5s">
-				<img src="img/1.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow bounceInDown center" data-wow-delay="1s">
-				<img src="img/9.jpg" class="card-img-top img-fluid" alt="..." >
-				<div class="card-body">
-				</div>
-			</div>
-			
-			
-		</div>
-		<div class="card-group">
-			<div class="card   wow rollIn" data-wow-delay="1s">
-				<img src="img/4.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow bounceInDown center" data-wow-delay="1.5s">
-				<img src="img/8.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow bounceInRight" data-wow-delay="2s">
-				<img src="img/2.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			
-		</div>
-		<div class="card-group">
-			<div class="card wow rollIn" data-wow-delay="1s">
-				<img src="img/20 (1).jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow bounceInDown center" data-wow-delay="2s">
-				<img src="img/21.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow bounceInRight" data-wow-delay="2.5s">
-				<img src="img/22.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			
-		</div>
-		<div class="card-group">
-			<div class="card wow rollIn" data-wow-delay="1.5s">
-				<img src="img/10.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow bounceInRight" data-wow-delay="1.5s">
-				<img src="img/7.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-		</div>
-		<div class="card-group">
-			
-			
-			<div class="card wow bounceInDown center" data-wow-delay="1s">
-				<img src="img/16.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow wow rollIn" data-wow-delay="1.5s">
-				<img src="img/17.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-		</div>
-		<div class="card-group">
-			
-			
-			<div class="card wow rollIn" data-wow-delay="1s">
-				<img src="img/11.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow bounceInRight" data-wow-delay="1.5s">
-				<img src="img/12.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-		</div>
-		<div class="card-group">
-			
-			
-			<div class="card wow rollIn" data-wow-delay="1s">
-				<img src="img/13.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			<div class="card wow bounceInRight" data-wow-delay="1.5s">
-				<img src="img/14.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-		</div>
-		<div class="card-group">
-			
-			
-			<div class="card wow bounceInDown center" data-wow-delay="1s">
-				<img src="img/19.jpg" class="card-img-top" alt="...">
-				<div class="card-body">
-				</div>
-			</div>
-			
-		</div>
-	</div>
-
+'<p align="left"> <font face="Courier New" color="#fff" size="6">Mong Em lúc nào cũng tươi vui mãi nhé.!! </font></p>' +
+'                    <br>' +
+'  <font size="4" color="#fff">Hy vọng Một ngày nào đó cuốn nhật ký này sẽ được viết tiếp ! </font>';
+        line = 0;
+        cursor = '_';
+        function teclear() {
+            if (line == mensaje.length) cursor = '';
+            document.getElementById('TextContent').innerHTML = mensaje.substring(0, line) + cursor;
+            var objDiv = document.getElementById("TextContent");
+            objDiv.scrollTop = objDiv.scrollHeight;
+            if (line++ < mensaje.length) setTimeout("teclear()", 60);
+        }
+    </script>
 </body>
-<footer>
-	<div class="container-fluid mt-2">
-		<div class="row">
-			<div class="col-11 text-right">
-				<p class="license mr-lg-4 mr-0">
-					
-				</p>
-			</div>
-		</div>
-	</div>
-</footer>
-<iframe src="https://www.nhaccuatui.com/lh/background/68D6NQhlcp7X" width="1" height="1" frameborder="0" allowfullscreen allow="autoplay"></iframe>
-
 </html>
