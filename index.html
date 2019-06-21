@@ -1,171 +1,99 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<!--
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<link rel="icon" type="image/png" href="images/favicon.ico">
+<title>Hoàng hậu xưn gái</title>
 
-   __ __  //|          __     ____  ______      _   __  _  __
-  / //_/ |/||  ___    / /    /  _/ /_  __/     | | / / / |/ /
- / ,<   / -_) / _ \  / _ \  _/ /    / /   _    | |/ / /    / 
-/_/|_|  \__/ /_//_/ /_//_/ /___/   /_/   (_)   |___/ /_/|_/  
-                                                             
-Trang tổng hợp, chia sẻ code hay
-url: http://kênhit.vn (Tên miền có dấu Tiếng Việt)
--->
-    <meta http-equiv="Page-Enter" content="progid:DXImageTransform.Microsoft.Fade(duration=1)">
-    <meta http-equiv="Page-Exit" content="progid:DXImageTransform.Microsoft.Fade(duration=1)">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta http-equiv="Content-Type" content="text/html; charset = UTF-8" />
-    <link rel="shortcut icon" href="favicon.ico" />
-    <link rel="Stylesheet" href="style.css" type="text/css" />
-    <title>Cao Thanh Huyền</title>
-    <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="counterup.js"></script>
-    <script type="text/javascript" src="timroi.js"></script>
-    <script language="javascript">
+<link rel='stylesheet' href='css/55c16d94000109f300000000.css' />
+<link rel='stylesheet' href='css/55c16dab0001286100000000.css' />
+<link rel='stylesheet' href='css/55c16dc00001fa1a00000000.css' />
+<link rel='stylesheet' href='css/55c16dda0001113100000000.css' />
 
-        title_tmp1 = document.title
+<script type="text/javascript" src="js/55ac9a860001a6c500000000.js"></script>
+<script type="text/javascript" src="js/55ac9ea30001ace700000000.js"></script>
+<script type="text/javascript" src="js/55c16c910001e21b00000000.js"></script>
 
-        if (title_tmp1.indexOf(">>") != -1) {
-
-            title_tmp2 = title_tmp1.split(">>");
-
-            title_last = "*~*" + title_tmp2[1];
-
-            title_last = title_last + "*~*" + title_tmp2[2];
-
-        } else {
-
-
-
-            if (title_tmp1.indexOf("*~*") != -1) {
-
-                title_tmp2 = title_tmp1.split("*~*");
-
-                title_last = "*~*" + title_tmp2[1];
-
-                if (title_last == "*~*") { title_last = "*~*" };
-
-                if (title_last == "*~*") { title_last = "*~*" };
-
-            }
-
-            else { title_last = " Gửi cho Hoàng hậu xưn gái... " }
-
-        }
-
-        title_new = "" + title_last + ""
-
-        step = 0
-
-        function flash_title() {
-
-            step++
-
-            if (step == 8) { step = 1 }
-
-            if (step == 1) { document.title = '[~~~~*' + title_new + '*~~~~]' }
-
-            if (step == 2) { document.title = '[~~~*~' + title_new + '-*~~~]' }
-
-            if (step == 3) { document.title = '[~~*~~' + title_new + '~~*~~]' }
-
-            if (step == 4) { document.title = '[~*~~~' + title_new + '~~~*~]' }
-
-            if (step == 5) { document.title = '[~~*~~' + title_new + '~~*~~]' }
-
-            if (step == 6) { document.title = '[~~~*~' + title_new + '~*~~~]' }
-
-            if (step == 7) { document.title = '[~~~~*' + title_new + '*~~~~]' }
-
-            setTimeout("flash_title()", 180);
-
-        }
-
-        flash_title();
-
-        function scrollToBottom(elm_id) {
-            var elm = document.getElementById(elm_id);
-            try {
-                elm.scrollTop = elm.scrollHeight;
-            }
-            catch (e) {
-                var f = document.createElement("input");
-                if (f.setAttribute) f.setAttribute("type", "text")
-                if (elm.appendChild) elm.appendChild(f);
-                f.style.width = "0px";
-                f.style.height = "0px";
-                if (f.focus) f.focus();
-                if (elm.removeChild) elm.removeChild(f);
-            }
-        }
-
-    </script>
-    
 </head>
-<body onload="javascript:teclear();">
-    <div id="TextCounter">
-        <strong>Hiệp sĩ</strong>
-        <img src="heartr.png" />
-        <strong>Hoàng Hậu xưn gái</strong> <span id="counter">
-            <script type="text/javascript">
-                // January: tháng 1
-                // February: tháng 2
-                // March: tháng 3
-                // April: tháng 4
-                // May: tháng 5
-                // June: tháng 6
-                // July: tháng 7
-                // August: tháng 8
-                // September: tháng 9
-                // October: tháng 10
-                // November: tháng 11
-                // December: tháng 12
-                new CountUp('June 20 2019 4:39:00', 'counter', "...  ");
-            </script>
-        </span>
-    </div>
-    <div id="BgContent">
-        <div id="copyright">
-            From: Hiệp sĩ
-        </div>
-        <div id="TextContent">
-        </div>
-        <div id="MusicPlayer">
-            <iframe src="https://www.nhaccuatui.com/mh/background/BTfiALRUxtkC" width="1" height="1" frameborder="0" allowfullscreen allow="autoplay"></iframe><br />
-        </div>
-    </div>
-    <div id="canvas">
-    </div>
-    <script type="text/javascript" src="protoclass.js"></script>
-    <script type="text/javascript" src="box2d.js"></script>
-    <script type="text/javascript" src="Main.js"></script>
-    <script language="javascript" type="text/javascript">
-        mensaje =
-'<font size="6" face="Courier New" color="red">Những dòng tâm sự....<br></font>' + ' <br>' +
 
-'<font color="#fff" size="4">Những lúc rảnh rỗi, Anh thường giành thời gian để vào trang cá nhân của Em..chỉ là muôn biết những ngày trôi qua Em như thế nào, A chỉ có thể im lặng và quan sát Em thôi!! </font><br>' +'<br>    ' +
+<body>
+<div id='content'>
+    <ul class='content-wrap'>
+        <!-- Screen 1 -->
+        <li>
+            <!-- Background -->
+            <div class="a_background">
+                <div class="a_background_top"></div>
+                <div class="a_background_middle"></div>
+                <div class="a_background_botton"></div>
+            </div>
+            <!-- Cloud -->
+            <div class="cloudArea">
+                <div class="cloud cloud1"></div>
+                <div class="cloud cloud2"></div>
+            </div>
+            <!-- Sun -->
+            <div id="sun"></div>
+        </li>
+        <!-- Screen 2 -->
+        <li>
+            <!-- Background -->
+            <div class="b_background"></div>
+            <div class="b_background_preload"></div>
+            <!-- Shop -->
+            <div class="shop">
+                <div class="door">
+                    <div class="door-left"></div>
+                    <div class="door-right"></div>
+                </div>
+                <!-- Light -->
+                <div class="lamp"></div>
+            </div>
+            <!-- Bird -->
+            <div class="bird"></div>
+        </li>
+        <!-- Screen 3 -->
+        <li>
+            <!-- Background -->
+            <div class="c_background">
+                <div class="c_background_top"></div>
+                <div class="c_background_middle"></div>
+                <div class="c_background_botton"></div>
+            </div>
+            <!-- Girl -->
+            <div class="girl"></div>
+            <div class="bridge-bottom">
+                <div class="water">
+                    <div id="water1" class="water_1"></div>
+                    <div id="water2" class="water_2"></div>
+                    <div id="water3" class="water_3"></div>
+                    <div id="water4" class="water_4"></div>
+                </div>
+            </div>
+            <!-- Stars -->
+            <ul class="stars">
+                <li class="stars1"></li>
+                <li class="stars2"></li>
+                <li class="stars3"></li>
+                <li class="stars4"></li>
+                <li class="stars5"></li>
+                <li class="stars6"></li>
+            </ul>
+            <!-- Logo (Text or Image) -->
+            <div class="logo"><br/>Huyền à, Kệ em có quan tâm hay k, A sẽ theo đuổi em đến cùng  :) 😘...
+        </li>
+    </ul>
+    <!-- Noname -->
+    <div id="snowflake"></div>
+    <!-- Boy -->
+    <div id="boy" class="charector"></div>
+</div>
 
-'<font size="4" color="#fff">Và cũng nhiều khi Anh đăng tus chỉ muốn thấy được Em like hay cmt, khi không thấy điều đó, Anh buồn lắm... </font><br>' +
-
-'<br>    ' +
-
-'<font size="4" color="#fff">Chúng ta mới quen nhau mới 2 tháng thôi đấy 16-4-2019 ;)) mà a ngỡ như 2 năm vậy ?? Nhớ lần đầu tiên thấy Em, khi đó Anh thấy Em rất tuyệt, nhỏ nhắn xinh xắn, xong a chở em đi  xem phim "Nhà có khách", anh với em ngồi cười từ đầu đến cuối luôn, đến mấy đoạn kinh dị em cứ che mắt, còn a thì ngồi cười mà a vẫn k qên được,xemphim xong a với e còn đi ăn rồi còn gặp bạn em xong chụp lén bọn mình nữa chứ. Ngày đầu tiên gặp em mà a thấy k tồn tai khoảng cách của 2 người xa lạ...2 ngày sau bọn mình lại đi chơi tiếp, đi ăn chân gà với cút lộn ở trôi ý , hum ý a đi làm bên đông anh, chỉ mong nhà kia ăn cỗ xong để a còn về đón em đi chơi nữa, a đi về mà phóng nhanh lắm, nó giống như là xe cứu hỏa đi ngoài đường ý @@ hum ý em mời a , mà nhà này bán mắc quá e nhỉ, biết thế đi ăn chè ;)) à ăn chân gà xong mình đi ăn chè đấy, đình tân lập chỗ a ý, hum ý a giả vờ xem chỉ tay để được cầm tay em đấy em biết k, tha lỗi cho a nhé ;)) a cố tình đấy. hì hì . xong về em bảo a xem chỉ tay cho bao người nhưng người a muốn xem nhất chỉ là em thôi. Ngày 26 bọn mình lại đi chơi tiếp, hum ý sao lại đi chơi em còn nhớ k, a cũng k nhớ , à hum ý em xin đi làm về sớm, xong bị ai mượn xe nữa mãi e k được đi, a cũng chờ mòn mỏi cơ ;v, xong 9r vẫn đi, tính đi ăn chè mà cơn mưa nên chả ai mở quán chứ, xong định đưa em lên chỗ thượng cát mà đường văng nên e sợ đòi về ;v, lúc ý a kbiet nên đưa em đi đâu nhỉ, thì tự dưng đầu a nảy số đưa e ra chỗ cầu xong mua mấy gói bim bim ăn , 2 đứa ngồi vừa tâm hự vừa ăn mà k nhớ mua nước cho e, a vô tâm qá mà ;(, xong về a mới nghĩ ra là tại sao k mua kem cho e chứ , e thấy a stupid không @@ :̣̣((, đưa e về thì phải để e đi 1 đoạn mới về đến nhà vì sợ cô Dung bắt được, a cũng sợ hiiii... Ngày 28 chúng mình lại đi xem phim tiếp, Anvenger EndGame ý ;)) Lúc ra phim ý sốt vé nên tầm trưa a ra mua sớm may vẫn mua được 2 vé nhưng chỗ k đẹp lắm hicc, 5h trời còn đổ mưa nữa chứ a cứ sợ là sẽ k đi được ý mà ô trời đùa chúng ta khi 5r k mưa nữa ;)) ngồi xem a phải để ý xem chỗ nào e k hiểu còn giải thích nữa ;V, phía trên thì có ô trẻ đi xem phim , phim hay như vậy mà bố ngồi chơi liên quân, cáu thật e nhỉ, lúc ý a chỉ muốn cầm đthoai của hắn vứt đi thôi :V (a đùa đấy) ag  a còn gắp gấu cho em nữa, mà fail (buồn hiccc). Tháng 4 của bọn mình đấy mới gặp mà đi chơi tận 4 lần luôn <3. <br> Em có tag a vào tus có cái chong chóng, chắc em thích nên a lùng bằng được mà đen cái chả có hàng mới cáu chứ, ok đợi vậy, a lên khắp các page, web, bla bla nhiều lắm thì cũng có chỗ bán, a đi mua luôn cho em, mua đc rồi thì tối hôm sau thì có cái shop a đặt ship từ Sài Gòn ship vào cho a cơ, mà a bảo hủy đơn rồi nên k nhận hì hì. Ai bảo chốt đơn chả rõ ràng gì cơ. <br> Xong thì đến sinh nhật A, kbiet e có nhớ ngày k :(( Hum ý a với em đi ăn ở chỗ tân hội , a có mua cho em 1 con vịt gắn xe, 1 cái kẹp tóc hình trái tym, em đeo lên trông xinh lắm, a cười bởi vì a thây vui chứ k có ý gì đâu, hum ý a cũng mong có được 1 món quà gì đó từ em nữa cơ thì perfect. Nhưng thấy e vui là a cũng vui rồi ;)) Tháng 5 này bọn mình đi chơi có hum đấy thì phải, a có rủ e mà em toàn bận ;(( , Nhưng có một hôm 18h30 e bảo k đi được e cũng k nói lý do nhưng... a biết lý do đó là gì, thật sự hôm đó a rất là chán nản và thất vọng.... Tháng 6 thì em có rủ a đi xphim nhưng đó là món quà sinh nhật muộn, a rủ em đi chơi mấy lần em đều từ chối rồi e rủ a đi chơi làm a nghĩ rằng em chỉ đi với a để bù lại món quà sinh nhật em còn nợ, A nghĩ e sẽ tặng cái gì đó bằng hiện vật  ;(. ngày 16-6 thì a có đi phỏng vấn ở tòa nhà em đang học, a có nói em trước hum đó rồi, cũng có định pv xong rồi em học xong thì sẽ đi ăn hoặc đi đâu đó nhưng hum đó a k thấy một phản hồi nào từ em, e bảo e k để ý đthoai a nghĩ đó kphai lý do bởi vì a có nói em trước tối qua rồi, vậy mà e k để ý đthoai ;(( thực sự hum đó a có lên chỗ e nhưng kbiet vào ntn nên đành đi xuống, a ngồi ở highland coffee đợi ý, a đợi rất lâu, luôn hy vọng e sẽ nt or gọi cho a, a luôn tìm lý do là em đang học k để ý đthoai, a rất là buồn em có biết k....tính giận em lâu lâu ý, mà em nhắn vài tin thôi a lại thấy chả muốn giận em nữa, k hiểu sao ý ;((, thấy a stupid lần 2 k :|, Tháng này biết em sắp hết time xem netflix a lại đi hỏi mượn thẻ bọn n cho em, bọn n cứ sợ a lừa đảo k cho mượn ý, tao thèm vào nhá .hmm cuối cùng bằng biện pháp nghiệp vụ a cũng mượn cho e được 1 cái thẻ, hay k hehe, nhớ lần tính teamview cho em xem free mà fail( ôm mặt khóc ), nhưng a tìm cho e được cái iflix cũng có phụ đề cho em học tiếng anh hihha, e dùng hết hạn thẻ kia thì nhớ hủy đi k trừ tiền chúng n bắt tội a chết, còn cái iflix kia thì e hết tk thì lấy tk face or gmail lại được free 1 tháng, hoặc em gõ code free iflix lxong nhập vào là được 3 tháng đấy,   a k biết tại sao tháng 5 và tháng 6 em đều từ chối đi chơi với a nhưng giờ a nghĩ là a đã có câu trả lời, Em không biết đâu, a muốn dẫn e đi nhiều nơi lắm, a muốn đưa em đi quanh cầu Nhật Tân, lên cầu chương dương, đi chụp ảnh, ngắm Hoàng Hôn ở Hồ Tây,muốn dạy e bơi , à cả đi phượt nữa, cũng muốn dẫn e đi xem a đá bóng 1 lần, nhưng chắc sẽ khó có thể thực hiện được nữa rồi, hôm nay e nay e lại hỏi tình cảm của a, a cũng muốn nói với em luôn tình cảm của a nhưng mà rất không may là bị em từ chối, lsuc đó a rất bối rối, a kbiet nên nói lên tcam của mình với em ntn nữa...Thực ra a có ý định là chủ nhật này sẽ rủ em đi chơi và cũng sẽ tỏ tình em luôn vì a muốn nói 3 từ Anh Yêu Em trước mặt em, em có từ chối a cũng nhẹ lòng... giờ thì  chả biết còn cơ hội k nữa, a đúng là kém cỏi em nhỉ, nói lên tình cảm của mình cũng khó để rồi người ta đi mất thì chả biest nói với ai @@  2 tháng những gì về em a đều lưu lại hết, vé xphim a vẫn giữ nhé ^^, hum nào  đi chơi với e a  chụp ảnh làm thành 1 album đấy, em còn bảo hum nào đi chơi cũng bảo a tặng 1 cái kẹo mút chứ, e còn giữ k nhớ đừng ăn đấy ^^  nhưng A vẫn thiếu 1 bức ảnh của chúng mình chụp với nhau... A còn định đưa em nuôi chuột nữa mà mãi n k đẻ hóa ra nó bị béo bụng em ạ ;(( lừa đảo thế kbiet ;V, Còn gì nữa k nhỉ ? À 2 tháng em biết bọn mình nhắn bao nhiêu tin k?? 11569 tin nhắn đấy, nhiều k, a với em nhiều chuyện phết hiii... A có đưa em 2 cây vạn niên thanh với hồng môn em nhớ chăm sóc kỹ 2 cây ý nhé, cây hồng môn e cho phơi nắng ngày 1,2 lần với tưới đều 2 ngày 1 lần cho nó nhé. Còn gì nữa k nhỉ À còn trang web a viết cho e, A thay thành trang này nhé coi như nhật ký của 2 chúng mình, em biết a là người thích lưu giữ kỷ niệm mà. Từ khi tiếp xúc với Em, Anh cảm thấy được Anh thích Em, và hằng ngày thứ tình cảm đó tăng dần lên, nhiều khi tưởng chừng không chịu nổi nữa, chỉ muốn nói hết với Em.</font><br>' +
-
-'  <font size="4" color="#fff"> Anh luôn đứng nhìn Em từ phía sau..hãy mạnh dạn bước đi Em nhé. Nếu sau này bên cạnh Em, sánh bước cùng Em ko phải là Anh..thì Anh vẫn luôn là người đi phía sau Em, dõi theo Em...và luôn cầu nguyện cho Em.! Hy vọng sẽ có 1 thiên thần nào đó thay Anh yêu Em nhiều như Anh yêu Em...! </font>' +
-'                    <br>' +
-
-'<p align="left"> <font face="Courier New" color="#fff" size="6">Mong Em lúc nào cũng tươi vui mãi nhé.!! </font></p>' +
-'                    <br>' +
-'  <font size="4" color="#fff">Hy vọng Một ngày nào đó cuốn nhật ký này sẽ được viết tiếp ! </font>';
-        line = 0;
-        cursor = '_';
-        function teclear() {
-            if (line == mensaje.length) cursor = '';
-            document.getElementById('TextContent').innerHTML = mensaje.substring(0, line) + cursor;
-            var objDiv = document.getElementById("TextContent");
-            objDiv.scrollTop = objDiv.scrollHeight;
-            if (line++ < mensaje.length) setTimeout("teclear()", 60);
-        }
-    </script>
+<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
+<p>Lỗi! Contact: <a class="__cf_email__" href="/cdn-cgi/l/email-protection" data-cfemail="116164706364756b51767c70787d3f727e7c">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></p>
+<p>Facebook：<a href="http://fb.com/vn.ncvinh" target="_blank">Vệ Sĩ</a></p>
+</div>
+<!-- BACKGROUND MUSIC -->
+    <iframe id="music" src="http://www.nhaccuatui.com/mh/background/7IgoJUfyT0tV" width="1" height="1" frameborder="0" allowfullscreen></iframe>
 </body>
 </html>
