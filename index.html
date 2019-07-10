@@ -1,99 +1,252 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-<link rel="icon" type="image/png" href="images/favicon.ico">
-<title>Hoàng hậu xưn gái</title>
-
-<link rel='stylesheet' href='css/55c16d94000109f300000000.css' />
-<link rel='stylesheet' href='css/55c16dab0001286100000000.css' />
-<link rel='stylesheet' href='css/55c16dc00001fa1a00000000.css' />
-<link rel='stylesheet' href='css/55c16dda0001113100000000.css' />
-
-<script type="text/javascript" src="js/55ac9a860001a6c500000000.js"></script>
-<script type="text/javascript" src="js/55ac9ea30001ace700000000.js"></script>
-<script type="text/javascript" src="js/55c16c910001e21b00000000.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1 user-scalable=0"/>
+<title></title>
 
 </head>
-
 <body>
-<div id='content'>
-    <ul class='content-wrap'>
-        <!-- Screen 1 -->
-        <li>
-            <!-- Background -->
-            <div class="a_background">
-                <div class="a_background_top"></div>
-                <div class="a_background_middle"></div>
-                <div class="a_background_botton"></div>
-            </div>
-            <!-- Cloud -->
-            <div class="cloudArea">
-                <div class="cloud cloud1"></div>
-                <div class="cloud cloud2"></div>
-            </div>
-            <!-- Sun -->
-            <div id="sun"></div>
-        </li>
-        <!-- Screen 2 -->
-        <li>
-            <!-- Background -->
-            <div class="b_background"></div>
-            <div class="b_background_preload"></div>
-            <!-- Shop -->
-            <div class="shop">
-                <div class="door">
-                    <div class="door-left"></div>
-                    <div class="door-right"></div>
-                </div>
-                <!-- Light -->
-                <div class="lamp"></div>
-            </div>
-            <!-- Bird -->
-            <div class="bird"></div>
-        </li>
-        <!-- Screen 3 -->
-        <li>
-            <!-- Background -->
-            <div class="c_background">
-                <div class="c_background_top"></div>
-                <div class="c_background_middle"></div>
-                <div class="c_background_botton"></div>
-            </div>
-            <!-- Girl -->
-            <div class="girl"></div>
-            <div class="bridge-bottom">
-                <div class="water">
-                    <div id="water1" class="water_1"></div>
-                    <div id="water2" class="water_2"></div>
-                    <div id="water3" class="water_3"></div>
-                    <div id="water4" class="water_4"></div>
-                </div>
-            </div>
-            <!-- Stars -->
-            <ul class="stars">
-                <li class="stars1"></li>
-                <li class="stars2"></li>
-                <li class="stars3"></li>
-                <li class="stars4"></li>
-                <li class="stars5"></li>
-                <li class="stars6"></li>
-            </ul>
-            <!-- Logo (Text or Image) -->
-            <div class="logo"><br/> Hãy nhớ, nếu có yêu , đừng yêu ai làm tổn thương em quá nhiều
-        </li>
-    </ul>
-    <!-- Noname -->
-    <div id="snowflake"></div>
-    <!-- Boy -->
-    <div id="boy" class="charector"></div>
+
+<nav>
+
+<div class="stars"></div>
+<div id="perspective" ondragstart="return false;"><!-- 禁止拖拽 -->
+<div id="wrap" >
+<img src="images/1.jpg" alt="" width="300" height="400">
+<img src="images/2.jpg" alt="" width="300" height="400">
+<img src="images/3.jpg" alt="" width="300" height="400">
+<img src="images/4.jpg" alt="" width="300" height="400">
+<img src="images/5.jpg" alt="" width="300" height="400">
+<img src="images/6.jpg" alt="" width="300" height="400">
+<img src="images/7.jpg" alt="" width="300" height="400">
+<img src="images/8.jpg" alt="" width="300" height="400">
+<img src="images/9.jpg" alt="" width="300" height="400">
+<img src="images/10.jpg" alt="" width="300" height="400">
+<img src="images/11.jpg" alt="" width="300" height="400">
+</div>
 </div>
 
-<div style="text-align:center;margin:50px 0; font:normal 14px/24px 'MicroSoft YaHei';">
-<p>Lỗi! Contact: <a class="__cf_email__" href="/cdn-cgi/l/email-protection" data-cfemail="116164706364756b51767c70787d3f727e7c">[email&#160;protected]</a><script data-cfhash='f9e31' type="text/javascript">/* <![CDATA[ */!function(t,e,r,n,c,a,p){try{t=document.currentScript||function(){for(t=document.getElementsByTagName('script'),e=t.length;e--;)if(t[e].getAttribute('data-cfhash'))return t[e]}();if(t&&(c=t.previousSibling)){p=t.parentNode;if(a=c.getAttribute('data-cfemail')){for(e='',r='0x'+a.substr(0,2)|0,n=2;a.length-n;n+=2)e+='%'+('0'+('0x'+a.substr(n,2)^r).toString(16)).slice(-2);p.replaceChild(document.createTextNode(decodeURIComponent(e)),c)}p.removeChild(t)}}catch(u){}}()/* ]]> */</script></p>
 
-</div>
-<!-- BACKGROUND MUSIC -->
-    <iframe src="https://www.nhaccuatui.com/mh/background/dB8JTVhx0jlA" width="1" height="1" frameborder="0" allowfullscreen allow="autoplay"></iframe>
-</body>
 </html>
+<style>
+
+* {margin: 0; padding: 0;}
+
+html, body {
+height: 100%;
+overflow: hidden;
+}body {
+width: 100%;
+height:100%;
+background: #000;
+background-size: 100%;
+perspective: 600px;
+
+/*禁止选中*/
+-moz-user-select: none;
+-webkit-user-select: none;
+-ms-user-select: none;
+-khtml-user-select: none;
+user-select: none;
+
+}
+ul{
+list-style: none;
+}
+li {
+float: left;
+}
+a {
+text-decoration: none;
+}
+nav {
+padding-top: 20px;
+height: 20px;
+}
+nav li {
+width: 50px;
+height: 24px;
+margin-left: 20px;
+text-align: center;
+}
+nav li a {
+display: block;
+width: 100%;
+height: 100%;
+line-height: 24px;
+background-color: #999;
+}
+.stars {
+position: absolute;
+top: 50%;
+left: 50%;
+width: 4px;
+height:4px;
+-webkit-border-radius:50%;
+-moz-border-radius:50%;
+border-radius:50%;
+animation: fly 3s linear infinite;
+transform-style: preserve-3d;
+
+ 
+
+}
+.stars:before, .stars:after {
+content: "";
+position: absolute;
+width: inherit;
+height: inherit;
+box-shadow: inherit;
+}
+.stars:before {
+transform: translateZ(-100px);
+opacity: .6;
+}
+.stars:after {
+transform: translateZ(-600px);
+opacity: .4;
+}
+
+@keyframes fly {
+from {
+transform: translateZ(0px);
+opacity: .6;
+}
+to {
+transform: translateZ(300px);
+opacity: 1;
+}
+}
+
+#perspective{
+perspective: 800px;
+}
+#wrap {
+width: 150px;
+height: 170px;
+margin: 160px auto;
+position: relative;
+transform-style: preserve-3d;
+transform: rotateX(-10deg);
+}
+#wrap img{
+position: absolute;
+top: 0;
+
+width: 120px;
+height: 160px;
+border: 1px solid #333;
+padding: 4px;
+background-color: rgba(200,200,200,0.4);
+-webkit-box-reflect: below 10px -webkit-linear-gradient(top ,rgba(0,0,0,0) 40%,rgba(0,0,0,0.5) 100%);
+}
+    </style>
+js:
+<script type="text/javascript">
+
+var w = document.documentElement.clientWidth*1.2;
+var h = document.documentElement.clientHeight*1.2;
+var star = document.getElementsByClassName("stars")[0];
+var n = 1000;
+//随机函数
+function randomNum(m, n) {
+return Math.floor(Math.random() * (n - m + 1) + m);
+}
+var str = '';
+for (var i = 0; i < n; i++) {
+var numX = randomNum(-w, w);
+var numY = randomNum(-h, h);
+var color = 'rgb(' + randomNum(0, 255) + ',' + randomNum(0, 255) + ',' + randomNum(0, 255) + ')';
+str += numX +'px'+' ' + numY+'px'+' '+ color+',';
+}
+str = str.slice(0,-1);
+star.style.boxShadow = str;var oImg = document.getElementsByTagName("img");
+var oWrap = document.getElementById("wrap");
+var nowX, nowY, lastX, lastY, minusX, minusY, roX = -10, roY = 0;
+(function(i){
+var imgLength = oImg.length;
+var deg = 360/imgLength;
+for (; i < imgLength; i++) {
+oImg[i].style.transform = "rotateY(" + deg*i +"deg) translateZ(300px)";
+};
+})(0);
+document.onmousedown = function(e){
+var e = e || window.event;//ie不支持参数调用
+//第一次点击的时候产生最早的旧的值
+lastX = e.clientX;
+lastY = e.clientY;
+//鼠标移动
+this.onmousemove = function(e){
+var e = e || window.event;
+nowX = e.clientX;
+nowY = e.clientY;
+
+minusX = nowX - lastX;
+minusY = nowY - lastY;
+console.log(minusX,minusY);
+roY += minusX * 0.15;//沿着Y轴转，是鼠标左右移动
+roX -= minusY * 0.15;//沿着X轴转,是鼠标上下移动,旋转下到上为负
+//console.log(roY,roX);
+oWrap.style.transform = 'rotateX(' + roX + 'deg) rotateY(' + roY +'deg)';
+
+lastX = nowX;
+lastY = nowY;
+}
+this.onmouseup = function(){
+this.onmousemove = null;
+timer = setInterval(function(){
+minusX *= 0.95;
+minusY *= 0.95;
+roY += minusX * 0.15;
+roX -= minusY * 0.15;
+oWrap.style.transform = 'rotateX(' + roX + 'deg) rotateY(' + roY +'deg)';
+if(Math.abs(minusX) < 0.1 || Math.abs(minusY) < 0.1){
+clearInterval(timer);
+}
+}, 1000/60);
+}
+};
+//手机端
+
+function touchStart(e){
+e.preventDefault();
+var touch = e.touches[0];
+lastX = touch.pageX;
+lastY = touch.pageY;
+}
+function touchMove(e){
+e.preventDefault();
+var touch = e.touches[0];
+nowX = touch.pageX;
+nowY = touch.pageY;
+minusX = nowX - lastX;
+minusY = nowY - lastY;
+console.log(minusX,minusY);
+roY += minusX * 0.2;
+roX -= minusY * 0.15;
+console.log(roY,roX);
+oWrap.style.transform = 'rotateX(' + roX + 'deg) rotateY(' + roY +'deg)';
+
+lastX = nowX;
+lastY = nowY;
+}
+function touchEnd(e){
+e.preventDefault();
+
+timer = setInterval(function(){
+minusX *= 0.95;
+minusY *= 0.95;
+roY += minusX * 0.15;
+roX -= minusY * 0.15;
+oWrap.style.transform = 'rotateX(' + roX + 'deg) rotateY(' + roY +'deg)';
+if(Math.abs(minusX) < 0.1 || Math.abs(minusY) < 0.1){
+clearInterval(timer);
+}
+}, 1000/60);
+}
+
+document.addEventListener('touchstart', touchStart, false);
+document.addEventListener('touchmove', touchMove, false);
+document.addEventListener('touchend', touchEnd, false);
+    </script>
