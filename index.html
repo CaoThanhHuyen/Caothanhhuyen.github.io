@@ -1,732 +1,298 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
 
-<html lang="en">
+<html lang="vi">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Document</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Hiệu ứng CSS 3D</title>
+	<meta name="description" content="Hiệu ứng trình diễn ảnh 3D đẹp mắt chỉ với HTML5 và CSS3" />
+	<meta property="og:description" content="Hiệu ứng trình diễn ảnh 3D đẹp mắt chỉ với HTML5 và CSS3" />
+	<meta property="og:image" content="https://redirect.nhq.vn/demo/screenshot.png" />
+	<link rel="stylesheet" href="css/style.css?v=1.0" type="text/css" media="screen" />
+	<link rel="stylesheet prefetch" href="css/font-awesome.min.css?v=4.3.0" />
+	<script type="text/javascript" charset="utf-8">
+	function hasClassName(inElement, inClassName)
+	{
+		var regExp = new RegExp('(?:^|\\s+)' + inClassName + '(?:\\s+|$)');
+		return regExp.test(inElement.className);
+	}
+
+	function addClassName(inElement, inClassName)
+	{
+		if (!hasClassName(inElement, inClassName))
+			inElement.className = [inElement.className, inClassName].join(' ');
+	}
+
+	function removeClassName(inElement, inClassName)
+	{
+		if (hasClassName(inElement, inClassName)) {
+			var regExp = new RegExp('(?:^|\\s+)' + inClassName + '(?:\\s+|$)', 'g');
+			var curClasses = inElement.className;
+			inElement.className = curClasses.replace(regExp, ' ');
+		}
+	}
+
+	function toggleClassName(inElement, inClassName)
+	{
+		if (hasClassName(inElement, inClassName))
+			removeClassName(inElement, inClassName);
+		else
+			addClassName(inElement, inClassName);
+	}
+
+	function toggleShape()
+	{
+		var shape = document.getElementById('shape');
+		if (hasClassName(shape, 'cube') || hasClassName(shape, 'autoLoad')) {
+			if (hasClassName(shape, 'cube')) {
+				removeClassName(shape, 'cube');
+			}
+			if (hasClassName(shape, 'autoLoad')) {
+				removeClassName(shape, 'autoLoad');
+			}
+			addClassName(shape, 'ring');
+		} else {
+			removeClassName(shape, 'ring');
+			addClassName(shape, 'cube');
+		}
+
+		var stage = document.getElementById('stage');
+		if (hasClassName(shape, 'ring'))
+			stage.style.webkitTransform = 'translateZ(-200px)';
+		else
+			stage.style.webkitTransform = '';
+	}
 	
-	<link rel="stylesheet" href="css/bootstrap.css">
-	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="fontawesome/css/all.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="js/bootstrap.js"></script>
-	<link rel="stylesheet" href="OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/dist/assets/owl.carousel.min.css">
-	<link rel="stylesheet" href="OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/dist/assets/owl.theme.default.min.css">
+	function downloadLink()
+    {
+		location.href = 'https://www.facebook.com/nhquyet';
+    }
+	
+	var count = 0;
+	var num_bg = 1;
+	var next_bg = 0;
+	var preLoadbg;
+	
+	function timedCount()
+	{
+		if(count >= 8) {
+			count = 0;
+			autoLoad();
+		} else {
+			count = count + 1;
+		}
+		if(next_bg >= 15) {
+			num_bg = num_bg + 1;
+			if(num_bg > 10) {
+				num_bg = 1;
+			}
+			document.body.style.backgroundImage = "url(css/bg/" + num_bg + ".jpg)";
+			preLoadbg = new Image();
+			if(num_bg == 10) {
+				preLoadbg.src = "css/bg/1.jpg";
+			} else {
+				preLoadbg.src = "css/bg/" + (num_bg + 1) + ".jpg";
+			}
+			next_bg = 0;
+		} else {
+			next_bg = next_bg + 1;
+		}
+		setTimeout(timedCount, 1000);
+	}
+	
+	function autoLoad()
+	{
+		var shapeTest = document.getElementById('shape');
+		if (hasClassName(shapeTest, 'cube')) {
+			removeClassName(shapeTest, 'cube');
+			addClassName(shapeTest, 'autoLoad');
+		} else {
+			toggleShape();
+		}
+	}
+	</script>
+	<script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+	<script type="text/javascript" src="js/snow.js?v=1.0"></script>
+	<script type="text/javascript" src="js/ruoi.js?v=1.0"></script>
+	<script type="text/javascript" src="js/player.js?v=1.1"></script>
 </head>
-<body>
-<!-- Navbar -->
-<nav class="container-fluid navbar-expand-xl navbar-light bg-light sticky-top">
-		<div class="row">
-			<div class="col-lg-3 col-sm-3 col-md-3 col-3">
-				<a class="navbar-branch" href="#">
-					<img class="logo-header" src="images/logo.png" alt="" height="64">
+<body onload="timedCount()">
+	<div id="container">
+		<div id="stage">
+			<div id="shape" class="cube backfaces">
+				<div class="plane one"></div>
+				<div class="plane two"></div>
+				<div class="plane three"></div>
+				<div class="plane four"></div>
+				<div class="plane five"></div>
+				<div class="plane six"></div>
+				<div class="plane seven"></div>
+				<div class="plane eight"></div>
+				<div class="plane nine"></div>
+				<div class="plane ten"></div>
+				<div class="plane eleven"></div>
+				<div class="plane twelve"></div>
+			</div>
+		</div>
+		<div class="mhn-player">
+			<div class="album-art"></div>
+			<div class="play-list">
+				<a href="#" class="play"
+					data-id="1"
+					data-album=""
+					data-artist=" Jeremy Zucker"
+					data-title="Comethru"
+					data-albumart="audio/covers/maxresdefault.jpg"
+					data-url="audio/Comethru - Jeremy Zucker [128kbps_MP3].mp3">
+				</a>
+
+				<a href="#" class="play"
+					data-id="2"
+					data-album=""
+					data-artist="Trịnh Đình Quang"
+					data-title="Em Mỉm Cười Trông Thật Đẹp"
+					data-albumart="audio/covers/em_mim_cuoi.jpg"
+					data-url="audio/Em Mỉm Cười Trông Thật Đẹp.mp3">
+				</a>
+
+				<a href="#" class="play"
+					data-id="3"
+					data-album=""
+					data-artist="Ed Sheeran"
+					data-title="Thinking Out Loud"
+					data-albumart="audio/covers/thing_out_loud.jpg"
+					data-url="audio/Thinking Out Loud - Ed Sheeran [320kbps_MP3].mp3">
+				</a>
+
+				<a href="#" class="play"
+					data-id="4"
+					data-album=""
+					data-artist="Billie Eilish"
+					data-title="Ocean Eyes"
+					data-albumart="audio/covers/ocean_eyes.jpg"
+					data-url="audio/Ocean Eyes - Billie Eilish [320kbps_MP3].mp3">
+				</a>
+
+				<a href="#" class="play"
+					data-id="5"
+					data-album=""
+					data-artist="Martin Garrix & Troye Sivan"
+					data-title="There For You"
+					data-albumart="audio/covers/there-for-you.jpg"
+					data-url="audio/There_For_You.mp3">
+				</a>
+
+				<a href="#" class="play"
+					data-id="6"
+					data-album=""
+					data-artist="Sasha Sloan"
+					data-title="Older "
+					data-albumart="audio/covers/older.jpg"
+					data-url="audio/Older - Sasha Sloan [320kbps_MP3].mp3">
+				</a>
+
+				<a href="#" class="play"
+					data-id="7"
+					data-album=""
+					data-artist="911"
+					data-title="I Do"
+					data-albumart="audio/covers/i-do.jpg"
+					data-url="audio/I_Do.mp3">
+				</a>
+
+				<a href="#" class="play"
+					data-id="8"
+					data-album=""
+					data-artist="Fiona Fung"
+					data-title="A Little Love"
+					data-albumart="audio/covers/a-little-love.jpg"
+					data-url="audio/A_Little_Love.mp3">
+				</a>
+				
+				<a href="#" class="play"
+					data-id="9"
+					data-album=""
+					data-artist="Fiona Fung"
+					data-title="Proud Of You"
+					data-albumart="audio/covers/proud-of-you.jpg"
+					data-url="audio/Proud_Of_You.mp3">
+				</a>
+				
+				<a href="#" class="play"
+					data-id="10"
+					data-album=""
+					data-artist="My Playlist"
+					data-title="Nhạc Nền"
+					data-albumart="audio/covers/beautiful-in-white.jpg"
+					data-url="audio/yeu_hang_ngan_an_sung_hoang_hon_tim_1330876.mp3">
 				</a>
 			</div>
-			<div class="col-lg-9 col-sm-9 col-md-9 col-9">
-				<button class="nav-btn navbar-toggler" type="button" data-toggle="collapse" data-target="#navabarResponsive">
-		<span class="navbar-toggler-icon icon"></span>
-		</button>
-		<div class="collapse navbar-collapse" id="navabarResponsive">
-			<ul class="navbar-nav ml-auto">
-				<li class="nav-item">
-					<a href="" class="nav-link ac" href="#">Ibeau là gì?</a>
-				</li>
-				<li class="nav-item">
-					<a href="" class="nav-link" href="#">Tuyển dụng</a>
-				</li>
-				<li class="nav-item">
-					<a href="" class="nav-link" href="#">Salon</a>
-				</li>
-				<li class="nav-item">
-					<a href="" class="nav-link" href="#">Hướng dẫn</a>
-				</li>
-				<li class="nav-item">
-					<a href="" class="nav-link" href="#">Kiến thức</a>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-							EngLish
-						</a>
-						<div class="dropdown-menu">
-							<a class="dropdown-item" href="#"><img src="images/icon_americal.gif" alt="">Eng</a>
-							<a class="dropdown-item" href="#"><img src="images/icon_vietnamese.png" alt="">Vie</a>
-						</div>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-							
-							Justin
-
-						</a>
-						<img class="logo-user" src="images/icon_user.png" alt="">
-						<div class="dropdown-menu account">
-							<a class="dropdown-item" href="#">My Account</a>
-							<a class="dropdown-item" href="#">Logout</a>
-						</div>
-					</li>
-				<li class="nav-item">
-					<button class="btn btn-danger btn-register">ĐĂNG KÝ NGAY</button>
-				</li>
-				</ul>
-				
-				
-		</div> <!-- .collapse -->
+			<div class="audio">
+				<audio id="player" class="music" data-id="1" autoplay><source src="audio/That_Girl.mp3" type="audio/mpeg" /></audio>
+			</div>
+			<div class="current-info">
+				<div class="song-artist"></div>
+				<!--div class="song-album"></div-->
+				<div class="song-title"></div>
+			</div>
+			<div class="controls">
+				<a href="#" class="toggle-play-list"><i class="fa fa-list-ul"></i></a>
+				<div class="duration clearfix">
+					<span class="pull-left play-position"></span>
+					<span class="pull-right"><span class="play-current-time">00:00</span> / <span class="play-total-time">00:00</span></span>
+				</div>
+				<div class="progress"><div class="bar"></div></div>
+				<div class="action-button">
+					<a href="#" class="prev"><i class="fa fa-step-backward"></i></a>
+					<a href="#" class="play-pause"><i class="fa fa-pp"></i></a>
+					<a href="#" class="stop"><i class="fa fa-stop"></i></a>
+					<a href="#" class="next"><i class="fa fa-step-forward"></i></a>
+					<input type="range" class="volume" min="0" max="1" step="0.1" value="0.8" data-css="0.8">
+				</div>
 			</div>
 		</div>
-</nav> <!-- .navbar -->
-
-<!-- Map -->
-<section class="container-fluid map">
-	<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d59589.15407702294!2d105.74924372230963!3d21.019793016700135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1svi!2s!4v1565325267757!5m2!1svi!2s" frameborder="0" style="border:0" allowfullscreen></iframe>
-	<button class="search-submit"><i class="fa fa-search"></i></button>
-	<input type="text" class="search-text">
-</section> <!-- .Map -->
-
-<!-- Salon nổi bật -->
-<section class="index-service">
-	<div class="index-header">
-	</div> <!-- end index-header -->
-	<div class="content-salon container">
-		<div class="salon-filter">
-			<div class="form-filter">
-				<div class="form-group">		
-					<label for="exampleFormControlSelect1">Thành phố</label>
-					<select class="form-control" id="exampleFormControlSelect1">
-						<option></option>
-						<option></option>
-						<option></option>
-						<option></option>
-						<option></option>
-					</select>			
-				</div>
-				<div class="form-group">
-					<label for="exampleFormControlSelect1">Quận</label>
-					<select class="form-control" id="exampleFormControlSelect1">
-						<option></option>
-						<option></option>
-						<option></option>
-						<option></option>
-						<option></option>
-					</select>				
-				</div>
-				<div class="form-group">					
-					<label for="exampleFormControlSelect1">Dịch vụ</label>
-					<select class="form-control" id="exampleFormControlSelect1">
-						<option></option>
-						<option></option>
-						<option></option>
-						<option></option>
-						<option></option>
-					</select>
-				</div>
-					<button class="btn btn-danger search_btn">Tìm Kiếm</button>				
-			</div> <!-- end .form-filter -->
-		</div> <!-- end .salon-filter -->
-	</div> <!-- end .content-salon -->
-	<!-- Slide Salon highlight -->
-	<h2 class="salon-highlight-title">Salon Nổi bật</h2>
-	<div class="salon-highlight ">
-		<div class="container mt-5 mb-5">
-		<!-- Slider salonhighlight -->
-		<div class="owl-carousel owl-carousel-highlight owl-theme">
-			<div class="item">
-				<div class="card">
-					<img data-src="images/hightlight_salon_1.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title"><i class="fa fa-tag"></i>Retreat</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="images/hightlight_salon_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title">Gib Bolton Penthouse 1606</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="images/hightlight_salon_3png.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title">Green Apple Skin Care Salon</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="images/hightlight_salon_4.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title"><i class="fa fa-tag"></i>Green Apple Skin Care Salon</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="images/hightlight_salon_3png.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title">Gib Bolton Penthouse 1606</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấewty</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title"><i class="fa fa-tag"></i>Retreat</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title">Gib Bolton Penthouse 1606</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy Ha noi</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title">Gib Bolton Penthouse 1606</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title">Gib Bolton Penthouse 1606</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div><!--  end .item -->
-			<div class="item">
-				<div class="card">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h5 class="card-title">Gib Bolton Penthouse 1606</h5>
-						<p>09 Ngõ 108 Cầu Giấy, Cầu Giấy</p>
-						<div class="start">
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-							<i class="fa fa-star"></i>
-						</div>
-					</div>
-				</div>
-			</div> <!--  end .item -->
-		</div>
-		</div>	
-	</div> <!-- end .salon-highlight -->
-</section> <!-- end .index-service -->
-
-<!-- Ưu Đãi hàng ngày -->
-<section class=" daily-deal">
-	<div class="container dayly-deal-fix mt-5 mb-5">
-		<h3 class="text-center deal-title">Ưu Đãi Hàng Ngày</h3>
-		<!-- Slider dayly-deal -->
-		<div class="owl-carousel owl-carousel-deal owl-theme">
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="images/service_1.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/service_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Gội xả Kỹ càng</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="images/service_3.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/service_4.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="images/hightlight_salon_3png.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/hightlight_salon_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/hightlight_salon_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/hightlight_salon_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title card-title-deal">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/hightlight_salon_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/hightlight_salon_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<p class="card-time-to">Từ ngày:</p>
-						<span class="card-time"> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/hightlight_salon_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-			<div class="item">
-				<div class="card daily-deal-content">
-					<img data-src="http://placehold.it/270x200" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-				<div class="card daily-deal-content">
-					<img data-src="images/hightlight_salon_2.png" class="card-img-top owl-lazy" alt="">
-					<div class="card-body">
-						<h3 class="card-title">Cạo mặt êm ái</h3>
-						<span class="card-address">09 Ngõ 108 Cầu Giấy, Q.Cầu Giấy</span>
-						<span class="card-price"><strike>600.000</strike>450.000</span>
-						<span class="card-time"><p class="card-time-to">Từ ngày:</p> 20/10/2018 - 31/10/2018</span>
-					</div>
-				</div>
-			</div>
-		</div> <!-- end .owl-carousel -->
-	</div> <!-- end .container -->
-</section> <!-- end .daily-deal -->
-
-<!-- Người Nổi tiếng nói gì về chúng tôi -->
-<section class="talk-about-our">
-	<h3 class="text-center talk-about-title">Người Nổi tiếng nói gì về Ibeau</h3>
-	<div class="container talk-content">
-		<div class="row talk-fix-row">
-			<div class="col-lg-3">
-				<div class="card">
-					<img class="card-img-top" style="width: 15rem; height: 17.8rem" src="images/talk_about_our.png" alt="Card image cap">
-					<div class="card-body">
-						<h3 class="famous-name">Phan Minh Huyen</h3>
-						<p class="card-text famous-info">(Huyền Lizzie – Diễn viên)</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3">
-				<div class="card">
-					<img class="card-img-top" style="width: 15rem;height: 17.8rem;" src="images/talk_about_our_2.png" alt="Card image cap">
-					<div class="card-body">
-						<h3 class="famous-name">Nguyễn Minh Trang</h3>
-						<p class="card-text famous-info">(Mẹ Daisy – MC Đài truyền hình VN)</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3">
-				<div class="card">
-					<img class="card-img-top" style="width: 15rem;height: 17.8rem;" src="images/talk_about_our_3.png" alt="Card image cap">
-					<div class="card-body">
-						<h3 class="famous-name">Nguyễn Minh Hà</h3>
-						<p class="card-text famous-info">(MC Đài truyền hình Việt Nam)</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-3">
-				<div class="card">
-					<img class="card-img-top" style="width: 15rem;height: 17.8rem;" src="images/talk_about_our_4.png" alt="Card image cap">
-					<div class="card-body">
-						<h3 class="famous-name">Võ Hoàng Ngọc Anh</h3>
-						<p class="card-text famous-info">(Julie Võ- MC)</p>
-					</div>
-				</div>
-			</div>
-		</div> <!-- end .row -->
-	</div> <!-- end .container -->
-</section> <!-- end .talk_about_our -->
-
-
-<!-- Giới thiệu về app ibeau -->
-<section class="introduce">
-	<div class="container introduce-fix">
-		<div class="row ">
-			<div class="col-lg-5 introduce-left">
-				<h1 class="introduce-title">Giới thiệu App Ibeau</h1>
-				<p class="introduce-content">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.</p>
-				
-				<button class="btn btn-ggplay"></button>
-				<button class="btn btn-apple"></button>
-			</div>
-			<div class="col-lg-7 introduce-right">
-				<a href=""><img class="img-phone" src="images/iphone.png" alt=""></a>
-			</div>
-		</div>
-	</div> <!-- end .container -->
-</section> <!-- end .introduce -->
-
-<!-- Tin Tức -->
-<section class="news">
-	<div class="container">
-		<h3 class="text-center news-title">Tin tức</h3>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="card">
-					<img src="images/news_1.png" class="card-img-top" alt="">
-					<div class="card-body">
-						<h3 class="card-title news-title-content">Word startup Meeting</h3>
-						<p class="news-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id quasi, quaerat deleniti voluptatem repellat in harum numquam quibusdam architecto ipsum.</p>
-						<a class="news-link" href="">Xem them</a>
-					</div>
-				</div>
-			</div>	
-			<div class="col-md-4">
-				<div class="card">
-					<img src="images/news_2.png" class="card-img-top" alt="">
-					<div class="card-body">
-						<h3 class="card-title news-title-content">Word startup Meeting</h3>
-						<p class="news-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id quasi, quaerat deleniti voluptatem repellat in harum numquam quibusdam architecto ipsum.</p>
-						<a class="news-link" href="">Xem them</a>
-					</div>
-				</div>
-			</div>	
-			<div class="col-md-4">
-				<div class="card">
-					<img src="images/news_3.png" class="card-img-top" alt="">
-					<div class="card-body">
-						<h3 class="card-title news-title-content">Word startup Meeting</h3>
-						<p class="news-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Id quasi, quaerat deleniti voluptatem repellat in harum numquam quibusdam architecto ipsum.</p>
-						<a class="news-link" href="">Xem them</a>
-					</div>
-				</div>
-			</div>	
+		<!--div class="audio">
+			<audio id="player" controls autoplay>
+				<source src="audio/That_Girl.mp3" type="audio/mpeg">
+			</audio>
+		</div-->
+		<div class="author">
+			<button onclick="downloadLink()">&copy; Thần Điêu Đại Hịp</button>
 		</div>
 	</div>
-</section>
-
-<!-- Ưu đãi hàng ngày -->
-<section class="endow">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-5 col-sm-12">
-				<img class="img-sale" src="images/sale.png" alt="">
-				<div class="sale-off">
-					<h3>Black Friday</h3>
-					<h1>30 <span>%</span> OFF</h1>
-				</div>
-			</div>
-			<div class="col-lg-2 col-sm-2"></div>
-			<div class="col-lg-4 col-sm-12">
-				<h3 class="endow-title">Đăng ký <br> nhận ngay ưu dãi</h3>
-				<ul class="form-register">
-					<li>
-						<input type="text" class="form-control" placeholder="Họ và tên">
-					</li>
-					<li>
-						<input type="text" class="form-control" placeholder="email">
-					</li>
-					<li>
-						<input type="text" class="form-control" placeholder="Số điện thoại">
-					</li>
-					<li class="checkbox-location">
-						<div class="choice-location">
-							<input name="location" type="radio">
-							<span>Hà nội</span>
-						</div>
-						<div class="choice-location test">
-							<input name="location" type="radio">
-							<span>Hồ Chí Minh</span>
-						</div>
-			
-					</li>
-					<li>
-						<button class="form-control btn btn-outline-danger btn-endow">Đăng ký nhận tư vấn</button>
-					</li>
-				</ul>
-			</div>
-			<div class="col-lg-1 col-sm-1"></div>
-		</div>
-	</div>
-</section>
-<!-- Footer -->
-<footer class="container-fluid">
-	<div class="container">
-		<div class="row space-footer">
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<ul class="footer-info">
-					<li class="info-item info-logo" >
-						<img src="images/logo.png" alt="">
-					</li>
-					<li class="info-item">
-						<h3>ARROWHITECH TECHNOLOGY JS</h3>
-					</li>
-					<li class="info-item info-location">
-						<div><i class="fa fa-map-marker-alt"></i></div>
-						
-						<label>8F, MITEC Building, Duong Dinh Nghe Street, 
-						Yen Hoa Ward, Cau Giay District, Hanoi, Vietnam</label>
-					</li>
-					<li class="info-item info-phone">
-						<div><i class="fa fa-phone"></i></div>
-						<label>0192838487</label>
-					</li>
-					<li class="info-item info-email">
-						<div><i class="fa fa-envelope"></i></div>
-						<a href="mailto:support@arrowhitech.com"><label>support@arrowhitech.com</label></a>
-					</li>
-					<li class="info-item info-social">
-						<i class="fab fa-facebook-f"></i>
-						<i class="fab fa-twitter"></i>
-						<i class="fab fa-linkedin-in"></i>
-						<i class="fab fa-youtube"></i>
-						<i class="fab fa-google-plus-g"></i>
-					</li>
-				</ul><!--   end footer-info -->
-			</div>  <!-- end col-lg-4  -->
-			<div class="col-lg-2 col-md-6 col-sm-6">
-				<ul class="footer-aboutUs">
-					<li class="aboutUs-item"><h3>Về Chúng tôi</h3></li>
-					<li class="aboutUs-item"><a href=""><i class="fa fa-angle-right"></i>Công ty của chúng tôi</a></li>
-					<li class="aboutUs-item"><a href=""><i class="fa fa-angle-right"></i>Liên hệ chúng tôi</a></li>
-					<li class="aboutUs-item"><a href=""><i class="fa fa-angle-right"></i>Dịch vụ của chúng tôi</a></li>
-					<li class="aboutUs-item"><a href=""><i class="fa fa-angle-right"></i>Nghề nghiệp</a></li>
-					<li class="aboutUs-item"><a href=""><i class="fa fa-angle-right"></i>Đội của chúng tôi</a></li>
-				</ul>
-			</div>
-			<div class="col-lg-2 col-md-6 col-sm-6">
-				<ul class="footer-aboutUs">
-					<li class="aboutUs-item"><h3>Hỗ Trợ</h3></li>
-					<li class="aboutUs-item"><a href=""><i class="fa fa-angle-right"></i>Điều khoản sử dụng</a></li>
-					<li class="aboutUs-item"><a href=""><i class="fa fa-angle-right"></i>Câu hỏi thường gặp</a></li>
-					<li class="aboutUs-item"><a href=""><i class="fa fa-angle-right"></i>Chính sch bảo mật</a></li>
-				</ul>
-			</div>
-			<div class="col-lg-4 col-md-6 col-sm-6">
-				<div class="footer-fanpage">
-					<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Farrowhitech%2F&tabs=timeline&width=370px&height=300px&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="370px" height="310px" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>
-				</div>
-				
-			</div>
-		</div>
-		<div class="row footer-btn ">
-			<div class="col-lg-12">
-				<button class="btn btn-outline-danger btn-ggplay"></button>
-				<button class="btn btn-outline-danger btn-apple"></button>
-			</div>
-		</div>
-	</div>	
-</footer>	<!-- end footer  -->
-
-
-
-<script src="OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/dist/owl.carousel.min.js"></script>
-	<script src="OwlCarousel2-2.3.4/OwlCarousel2-2.3.4/docs_src/assets/vendors/jquery.mousewheel.min.js"></script>
-	<script src="js/script.js">
+	<script type="text/javascript">
+		/**
+		var audios = [
+			"audio/That_Girl.mp3",
+			"audio/Im_Yours.mp3",
+			"audio/My_Girl.mp3",
+			"audio/Girls_Like_You.mp3",
+			"audio/There_For_You.mp3",
+			"audio/What_Makes_You_Beautiful.mp3",
+			"audio/I_Do.mp3",
+			"audio/A_Little_Love.mp3",
+			"audio/Beautiful_In_White.mp3",
+			"audio/Proud_Of_You.mp3"
+		];
+		var music = document.getElementById("player");
+		var getSrc = document.getElementsByTagName("source");
+		getSrc[0].src = audios[Math.floor(Math.random() * 10)];
+		music.load();
+		var index = audios.indexOf(getSrc[0].getAttribute("src"));
+		music.addEventListener('ended', function() {
+			if(index == -1 || index >= 9) {
+				index = 0;
+			} else {
+				index = index + 1;
+			}
+			getSrc[0].src = audios[index];
+			music.load();
+			music.play();       
+		});
+		*/
+		var firstPreload = new Image();
+		firstPreload.src = "css/bg/2.jpg";
 	</script>
+	<!--//[ https://www.facebook.com/nhquyet ]//-->
 </body>
 </html>
